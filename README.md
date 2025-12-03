@@ -47,24 +47,33 @@ Google Gemma 3を使用した万能支援ツールです。Windows上で動作�
 
 ## インストール
 
-### 1. リポジトリのクローン
+### 方法1: インストーラーを使用（推奨）
+
+1. [Releases](https://github.com/csyk21024-hub/Gemma-/releases)ページから最新のインストーラー（`GemmaSupportTool_Setup_x.x.x.exe`）をダウンロード
+2. ダウンロードしたファイルを実行
+3. インストールウィザードの指示に従ってインストール
+4. スタートメニューまたはデスクトップのショートカットからアプリを起動
+
+### 方法2: ソースコードから実行
+
+#### 1. リポジトリのクローン
 ```bash
 git clone https://github.com/csyk21024-hub/Gemma-.git
 cd Gemma-
 ```
 
-### 2. 仮想環境の作成（推奨）
+#### 2. 仮想環境の作成（推奨）
 ```bash
 python -m venv venv
 venv\Scripts\activate  # Windows
 ```
 
-### 3. 依存関係のインストール
+#### 3. 依存関係のインストール
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. APIキーの設定（オプション）
+### APIキーの設定（オプション）
 
 実際のGemma APIを使用する場合は、以下のいずれかの方法でAPIキーを設定してください：
 
@@ -116,11 +125,33 @@ features:
   education_mode: true
 ```
 
+## インストーラーのビルド
+
+開発者向けに、インストーラーを自分でビルドすることもできます。
+
+### Windows
+
+```batch
+cd installer
+build_installer.bat
+```
+
+### Linux/Mac
+
+```bash
+cd installer
+chmod +x build_installer.sh
+./build_installer.sh
+```
+
+詳細は [installer/README.md](installer/README.md) を参照してください。
+
 ## プロジェクト構造
 
 ```
 Gemma-/
 ├── run.py                  # エントリーポイント
+├── pyinstaller.spec        # PyInstaller設定
 ├── requirements.txt        # 依存関係
 ├── config.yaml            # 設定ファイル（自動生成）
 ├── src/
@@ -133,6 +164,14 @@ Gemma-/
 │   │   └── web_search_service.py # Web検索
 │   └── utils/
 │       └── config.py      # 設定管理
+├── installer/              # インストーラー関連ファイル
+│   ├── README.md          # ビルド手順
+│   ├── setup.iss          # Inno Setupスクリプト
+│   ├── build_installer.bat # Windowsビルドスクリプト
+│   └── build_installer.sh  # Linux/Macビルドスクリプト
+├── .github/
+│   └── workflows/
+│       └── build-installer.yml  # CI/CDワークフロー
 └── tests/                  # テスト
 ```
 

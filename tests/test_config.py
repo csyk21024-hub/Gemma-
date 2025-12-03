@@ -86,9 +86,9 @@ class TestConfig:
     
     def test_save_and_load_config(self):
         """Test saving and loading configuration"""
-        config_path = tempfile.mktemp(suffix='.yaml')
-        
-        try:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config_path = os.path.join(tmpdir, 'test_config.yaml')
+            
             # Create and modify config
             config1 = Config(config_path)
             config1.set("gemma", "model", value="gemma-3-27b")
@@ -97,21 +97,15 @@ class TestConfig:
             # Load in new instance
             config2 = Config(config_path)
             assert config2.get("gemma", "model") == "gemma-3-27b"
-        finally:
-            if os.path.exists(config_path):
-                os.unlink(config_path)
     
     def test_get_gemma_model(self):
         """Test getting Gemma model"""
-        config_path = tempfile.mktemp(suffix='.yaml')
-        
-        try:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config_path = os.path.join(tmpdir, 'test_config.yaml')
+            
             config = Config(config_path)
             model = config.get_gemma_model()
             assert model == "gemma-3-4b"
-        finally:
-            if os.path.exists(config_path):
-                os.unlink(config_path)
     
     def test_set_gemma_model(self):
         """Test setting Gemma model"""

@@ -47,14 +47,41 @@ Google Gemma 3を使用した万能支援ツールです。Windows上で動作�
 
 ## インストール
 
-### 方法1: インストーラーを使用（推奨）
+### 方法1: ワンクリックセットアップ（推奨）🚀
+
+ダブルクリックするだけで、仮想環境の作成・依存関係のインストール・アプリの起動まで自動で行います。
+
+#### Windows
+
+1. リポジトリをダウンロードまたはクローン
+2. `setup_and_run.bat` をダブルクリック
+3. 画面の指示に従って完了を待つ
+
+```bash
+# または、コマンドラインから実行
+.\setup_and_run.bat
+```
+
+> **Note**: Pythonがインストールされていない場合、スクリプトがインストール方法を案内します。
+
+#### Linux / macOS
+
+1. リポジトリをダウンロードまたはクローン
+2. ターミナルで以下を実行：
+
+```bash
+chmod +x setup_and_run.sh  # 初回のみ：実行権限を付与
+./setup_and_run.sh
+```
+
+### 方法2: インストーラーを使用
 
 1. [Releases](https://github.com/csyk21024-hub/Gemma-/releases)ページから最新のインストーラー（`GemmaSupportTool_Setup_x.x.x.exe`）をダウンロード
 2. ダウンロードしたファイルを実行
 3. インストールウィザードの指示に従ってインストール
 4. スタートメニューまたはデスクトップのショートカットからアプリを起動
 
-### 方法2: ソースコードから実行
+### 方法3: 手動セットアップ
 
 #### 1. リポジトリのクローン
 ```bash
@@ -66,6 +93,7 @@ cd Gemma-
 ```bash
 python -m venv venv
 venv\Scripts\activate  # Windows
+source venv/bin/activate  # Linux/Mac
 ```
 
 #### 3. 依存関係のインストール
@@ -151,6 +179,8 @@ chmod +x build_installer.sh
 ```
 Gemma-/
 ├── run.py                  # エントリーポイント
+├── setup_and_run.bat       # Windowsワンクリックセットアップ
+├── setup_and_run.sh        # Linux/Macワンクリックセットアップ
 ├── pyinstaller.spec        # PyInstaller設定
 ├── requirements.txt        # 依存関係
 ├── config.yaml            # 設定ファイル（自動生成）
@@ -164,6 +194,8 @@ Gemma-/
 │   │   └── web_search_service.py # Web検索
 │   └── utils/
 │       └── config.py      # 設定管理
+├── scripts/                # ユーティリティスクリプト
+│   └── install_python.ps1 # Windows用Pythonインストーラー
 ├── installer/              # インストーラー関連ファイル
 │   ├── README.md          # ビルド手順
 │   ├── setup.iss          # Inno Setupスクリプト

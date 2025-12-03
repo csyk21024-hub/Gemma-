@@ -38,11 +38,6 @@ a = Analysis(
         # Configuration
         'yaml',
         'dotenv',
-        # Standard library
-        'json',
-        'os',
-        'sys',
-        'typing',
     ],
     hookspath=[],
     hooksconfig={},

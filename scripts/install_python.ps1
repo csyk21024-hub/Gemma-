@@ -83,10 +83,13 @@ if ($useWinget) {
 
 if (-not $useWinget) {
     # 公式インストーラーをダウンロードして実行
-    $installerUrl = "https://www.python.org/ftp/python/3.12.0/python-3.12.0-amd64.exe"
+    # Note: Version パラメータに基づいてURLを構築
+    $fullVersion = "$Version.0"
+    $installerUrl = "https://www.python.org/ftp/python/$fullVersion/python-$fullVersion-amd64.exe"
     $installerPath = "$env:TEMP\python-installer.exe"
     
     Write-Host "  公式インストーラーをダウンロードしています..." -ForegroundColor White
+    Write-Host "  URL: $installerUrl" -ForegroundColor Gray
     try {
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath -UseBasicParsing

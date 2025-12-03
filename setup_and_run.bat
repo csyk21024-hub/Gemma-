@@ -38,6 +38,7 @@ if %errorlevel% neq 0 (
     echo   1. PowerShellを管理者として実行
     echo   2. 以下のコマンドを実行：
     echo      winget install Python.Python.3.12
+    echo   ※ 3.10以上であればどのバージョンでも動作します
     echo.
     echo [方法2] 公式サイトからダウンロード
     echo   https://www.python.org/downloads/
@@ -50,11 +51,14 @@ if %errorlevel% neq 0 (
     echo wingetが利用可能な場合、自動インストールを試みますか？
     set /p INSTALL_CHOICE="自動インストールする場合は Y を入力 [Y/N]: "
     
+    REM 推奨Pythonバージョン（3.10以上であれば動作）
+    set PYTHON_INSTALL_VERSION=3.12
+    
     if /i "!INSTALL_CHOICE!"=="Y" (
         echo.
         echo Pythonのインストールを開始します...
         echo.
-        winget install Python.Python.3.12 --accept-source-agreements --accept-package-agreements
+        winget install Python.Python.!PYTHON_INSTALL_VERSION! --accept-source-agreements --accept-package-agreements
         if !errorlevel! neq 0 (
             echo.
             echo wingetでのインストールに失敗しました。

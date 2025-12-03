@@ -48,9 +48,11 @@ if [ -z "$PYTHON_CMD" ]; then
     echo ""
     
     # OSを検出してインストール方法を表示
+    # 注意: 3.10以上であればどのバージョンでも動作します
     if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "macOSでのインストール方法:"
         echo "  brew install python@3.12"
+        echo "  ※ python@3.10, python@3.11 等でも動作します"
         echo ""
         echo "Homebrewがない場合:"
         echo "  /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
@@ -58,9 +60,11 @@ if [ -z "$PYTHON_CMD" ]; then
         echo "Ubuntu/Debianでのインストール方法:"
         echo "  sudo apt update"
         echo "  sudo apt install python3 python3-venv python3-pip"
+        echo "  ※ Python 3.10以上がインストールされます"
     elif [[ -f /etc/redhat-release ]]; then
         echo "RHEL/CentOS/Fedoraでのインストール方法:"
         echo "  sudo dnf install python3 python3-pip"
+        echo "  ※ Python 3.10以上がインストールされます"
     else
         echo "お使いのシステムのパッケージマネージャーでPython 3.10以上をインストールしてください。"
     fi

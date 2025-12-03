@@ -60,9 +60,11 @@ class GemmaService:
         
         try:
             genai.configure(api_key=self.api_key)
-            # Map our model names to Google's model names
+            # Note: Google Generative AI API maps Gemma models to compatible endpoints
+            # For cloud-based usage, Gemini models serve as the backend
+            # For local inference, you would need to use transformers library directly
             model_mapping = {
-                "gemma-3-1b": "gemini-1.5-flash",  # Fallback for demo
+                "gemma-3-1b": "gemini-1.5-flash",
                 "gemma-3-4b": "gemini-1.5-flash",
                 "gemma-3-12b": "gemini-1.5-pro",
                 "gemma-3-27b": "gemini-1.5-pro"

@@ -401,7 +401,7 @@ class SearchPanel(QWidget):
             formatted = f"タイトル: {result.title}\nURL: {result.url}\n概要: {result.snippet}"
             
             response = self.gemma_service.send_message(
-                f"以下の検索結果について詳しく説明してください:\n{formatted}",
+                "以下の検索結果について詳しく説明してください。",
                 context=formatted
             )
             self.analysis_output.setText(response)

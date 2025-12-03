@@ -129,6 +129,37 @@ class TestEducationModeService:
         service = EducationModeService()
         context = service.get_context_for_query("test query")
         assert context == ""
+    
+    def test_get_context_with_relevance(self):
+        """Test getting context uses keyword relevance scoring"""
+        service = EducationModeService()
+        
+        # Manually add documents to knowledge base
+        service.knowledge_base["doc1"] = DocumentInfo(
+            filename="general.pdf",
+            file_type="PDF",
+            page_count=1,
+            text_content="This is a general document with no specific keywords",
+            metadata={}
+        )
+        service.knowledge_base["doc2"] = DocumentInfo(
+            filename="python.pdf",
+            file_type="PDF",
+            page_count=1,
+            text_content="This document discusses Python programming and Python libraries",
+            metadata={}
+        )
+        
+        # Query about Python should return python.pdf content first
+        context = service.get_context_for_query("Python programming")
+        
+        # The context should contain both documents
+        assert "python.pdf" in context
+        assert "general.pdf" in context
+        # Python document should appear first due to higher relevance
+        python_pos = context.find("python.pdf")
+        general_pos = context.find("general.pdf")
+        assert python_pos < general_pos
 
 
 if __name__ == "__main__":

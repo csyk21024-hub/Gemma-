@@ -234,18 +234,30 @@ class EducationModeService:
         if not self.knowledge_base:
             return ""
         
-        # Simple approach: concatenate all document contents
-        # In production, you'd want semantic search/embeddings
+        # Score documents by keyword relevance
+        query_words = set(query.lower().split())
+        scored_docs = []
+        
+        for filepath, doc_info in self.knowledge_base.items():
+            doc_text_lower = doc_info.text_content.lower()
+            # Count keyword matches
+            score = sum(1 for word in query_words if word in doc_text_lower)
+            scored_docs.append((score, doc_info))
+        
+        # Sort by relevance score (descending)
+        scored_docs.sort(key=lambda x: x[0], reverse=True)
+        
+        # Build context from most relevant documents first
         context_parts = []
         current_length = 0
         
-        for doc_info in self.knowledge_base.values():
+        for score, doc_info in scored_docs:
             doc_text = f"[{doc_info.filename}]\n{doc_info.text_content}"
             if current_length + len(doc_text) <= max_context_length:
                 context_parts.append(doc_text)
                 current_length += len(doc_text)
             else:
-                # Add truncated version
+                # Add truncated version if there's room
                 remaining = max_context_length - current_length
                 if remaining > 100:
                     context_parts.append(f"[{doc_info.filename}]\n{doc_info.text_content[:remaining]}...")
